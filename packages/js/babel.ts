@@ -1,5 +1,4 @@
 import { dirname } from 'path';
-import { stripIndents } from '@nrwl/devkit';
 
 /*
  * Babel preset to provide TypeScript support and module/nomodule for Nx.
@@ -17,9 +16,6 @@ interface NxReactBabelPresetOptions {
 }
 
 module.exports = function (api: any, options: NxReactBabelPresetOptions = {}) {
-  console.warn(
-    stripIndents`@nrwl/web/babel is deprecated. Please use @nrwl/js/babel instead.`
-  );
   api.assertVersion(7);
 
   const isModern = api.caller((caller) => caller?.isModern);
