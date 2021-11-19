@@ -4,6 +4,7 @@ import {
   offsetFromRoot,
   generateFiles,
   readProjectConfiguration,
+  stripIndents,
 } from '@nrwl/devkit';
 import { join } from 'path';
 
@@ -23,5 +24,14 @@ export function createFiles(tree: Tree, options: JestProjectSchema) {
 
   if (options.setupFile === 'none') {
     tree.delete(join(projectConfig.root, './src/test-setup.ts'));
+  }
+
+  if (options.babelJest && !tree.exists('babel.config.json')) {
+    tree.write(
+      'babel.config.json',
+      JSON.stringify({
+        babelrcRoots: ['*'],
+      })
+    );
   }
 }
