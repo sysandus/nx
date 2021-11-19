@@ -1,4 +1,5 @@
 import {
+  babelDeps,
   babelJestVersion,
   jestTypesVersion,
   jestVersion,
@@ -59,7 +60,7 @@ function updateDependencies(tree: Tree, options: NormalizedSchema) {
   const dependencies = {
     tslib: tslibVersion,
   };
-  const devDeps = {
+  let devDeps = {
     '@nrwl/jest': nxVersion,
     jest: jestVersion,
     '@types/jest': jestTypesVersion,
@@ -68,21 +69,8 @@ function updateDependencies(tree: Tree, options: NormalizedSchema) {
 
   if (options.babelJest) {
     devDeps['babel-jest'] = babelJestVersion;
-    devDeps['@nrwl/js'] = nxVersion; // TODO(caleb): switch to nrwl/js
-    // TODO(caleb): is there where I need to set up babel? feels like this should be generic somewhere
-    devDeps['@babel/core'] = '^7.15.0';
-    devDeps['@babel/preset-env'] = '^7.15.0';
-    devDeps['@babel/plugin-proposal-class-properties'] = '^7.14.5';
-    devDeps['@babel/plugin-proposal-decorators'] = '^7.14.5';
-    devDeps['@babel/plugin-transform-regenerator'] = '^7.14.5';
-    devDeps['@babel/plugin-transform-runtime'] = '^7.15.0';
-    devDeps['@babel/runtime'] = '^7.14.8';
-    devDeps['@babel/preset-typescript'] = '^7.15.0';
-    devDeps['babel-loader'] = '^8.2.2';
-    devDeps['babel-plugin-const-enum'] = '^1.0.1';
-    devDeps['babel-plugin-macros'] = '^2.8.0';
-    devDeps['babel-plugin-transform-async-to-promises'] = '^0.8.15';
-    devDeps['babel-plugin-transform-typescript-metadata'] = '^0.3.1';
+    devDeps['@nrwl/js'] = nxVersion;
+    devDeps = { ...devDeps, ...babelDeps };
   }
 
   return addDependenciesToPackageJson(tree, dependencies, devDeps);
